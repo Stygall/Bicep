@@ -1,3 +1,1 @@
 # bicep-templates
-# Powershell
-# Powershell
