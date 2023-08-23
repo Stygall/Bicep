@@ -1,0 +1,34 @@
+trigger:
+  branches:
+    include:
+      - feature/*
+      - main
+pool:
+  vmImage: windows-2019
+
+variables:
+  - template: pipeline.variables.yaml
+  
+
+stages:
+  - stage: "Build${{variables.Environment}}${{variables.WorkloadName}}"
+    condition: succeeded()
+    jobs:
+      - template: build.yaml
+        parameters:
+          DeploymentPath: "${{variables.DeploymentPath}}"
+          DeploymentName: "${{variables.DeploymentName}}"
+          Environment: "${{variables.Environment}}"
+          Location: "${{variables.Location}}"
+          ServiceConnection: "${{variables.ServiceConnection}}"
+
+  - stage: "Deploy${{variables.Environment}}${{variables.WorkloadName}}"
+    dependsOn: "Build${{variables.Environment}}${{variables.WorkloadName}}"
+    jobs:
+      - template: deploy.yaml
+        parameters:
+          DeploymentPath: "${{variables.DeploymentPath}}"
+          DeploymentName: "${{variables.DeploymentName}}"
+          Environment: "${{variables.Environment}}"
+          Location: "${{variables.Location}}"
+          ServiceConnection: "${{variables.ServiceConnection}}"

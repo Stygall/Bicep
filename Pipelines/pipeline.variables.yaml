@@ -1,0 +1,8 @@
+variables:
+  Location: "westeurope"
+  DeploymentPath: "$(Build.SourcesDirectory)/deployment"
+  DeploymentName: 'NS_AKS_Core'
+  Environment: "Dev"
+  ScriptPath: "$(Build.SourcesDirectory)/scripts"
+  WorkloadName: "NS_AKS_Core"
+  ServiceConnection: "svc-nist-devtest-sharedservices"

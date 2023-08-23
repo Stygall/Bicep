@@ -1,0 +1,43 @@
+parameters:
+  - name: Environment
+    type: string
+  - name: ServiceConnection
+    type: string
+  - name: SubscriptionId
+    type: string
+  - name: ResourceGroupName
+    type: string
+
+jobs:
+  - job: Approval
+    pool: server # agentless job
+    condition: succeeded()
+    steps:
+      - task: ManualValidation@0
+        timeoutInMinutes: 1440 # 1440 minutes is 1 day time out
+        inputs:
+          instructions: "Test Bundle deployment successful, to continue to remove test Bundle deployment click on Resume"
+          notifyUsers: |
+            'cloudoperations@nieuwestroom.nl'
+          onTimeout: reject
+
+  - job: CleanUp
+    dependsOn: Approval
+    steps:
+      - task: AzurePowerShell@5
+        displayName: "remove deployments ${{parameters.Environment}}"
+        inputs:
+          azurePowerShellVersion: LatestVersion
+          pwsh: true
+          azureSubscription: "${{parameters.ServiceConnection}}"
+          ScriptType: InlineScript
+          Inline: |
+            Write-Host "Removing deployments"
+            Select-AzSubscription -SubscriptionId "${{parameters.SubscriptionId}}"
+            Write-Information -MessageData "set context for dev subscription " -Verbose
+            $rgExist = Get-AzResourceGroup -Name "${{parameters.ResourceGroupName}}"
+            if($rgExist)
+            {
+              Write-Host "ResourceGroup $rgExist exist...removing now."
+                Remove-AzResourceGroup -Name "${{parameters.ResourceGroupName}}" -Force -Verbose
+            }

@@ -1,0 +1,56 @@
+parameters:
+- name: DeploymentPath
+  type: string
+- name: DeploymentName
+  type: string
+- name: Environment
+  type: string
+- name: Location
+  type: string
+- name: ServiceConnection
+  type: string
+
+jobs:
+  - job: Build
+    displayName: Build artifact
+    steps:
+    - checkout: self
+      path: src
+      submodules: true
+
+    - task: AzurePowerShell@5
+      displayName: 'Bicep Validation:: ${{parameters.DeploymentName}}-${{parameters.Environment}}'
+      inputs:
+        azurePowerShellVersion: LatestVersion
+        pwsh: true
+        azureSubscription: "${{ parameters.ServiceConnection }}"
+        ScriptType: InlineScript
+        Inline: |
+          Write-Host "Deploy IaC CloudOps ${{parameters.DeploymentName}}-${{parameters.Environment}}"
+          $deploymentParameters = @{
+            Name                  = "${{parameters.DeploymentName}}"
+            Location              = "${{parameters.Location}}"
+            TemplateFile          = "${{parameters.DeploymentPath}}\main.bicep"
+            TemplateParameterFile = "${{parameters.DeploymentPath}}\main.parameters.json"
+            Verbose               = $true
+            WhatIf                = $true
+            
+          }
+          
+          New-AzDeployment @deploymentParameters
+
+          $deploymentTestParameters = @{
+            Name                  = "${{parameters.DeploymentName}}"
+            Location              = "${{parameters.Location}}"
+            TemplateFile          = "${{parameters.DeploymentPath}}\main.bicep"
+            TemplateParameterFile = "${{parameters.DeploymentPath}}\main.parameters.json"
+            Verbose               = $true
+            }
+            Test-AzDeployment @deploymentTestParameters
+
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish artifact: deployment'
+      inputs:
+        TargetPath: '${{parameters.DeploymentPath}}'
+        artifact: 'deployment'
+        publishLocation: 'pipeline'

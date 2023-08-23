@@ -1,0 +1,39 @@
+parameters:
+  - name: DeploymentPath
+    type: string
+  - name: DeploymentName
+    type: string
+  - name: Environment
+    type: string
+  - name: Location
+    type: string
+  - name: ServiceConnection
+    type: string
+    
+jobs:
+  - job: Deployment
+    displayName: 'Deployment ${{variables.Environment}}${{variables.WorkloadName}}'
+    steps:
+      - checkout: self
+        path: src
+        submodules: true
+
+      - task: AzurePowerShell@5
+        displayName: 'Deploy ${{parameters.DeploymentName}}-${{parameters.Environment}}'
+        inputs:
+          azurePowerShellVersion: LatestVersion
+          pwsh: true
+          azureSubscription: "${{ parameters.ServiceConnection }}"
+          ScriptType: InlineScript
+          Inline: |
+            Write-Host "Deploy IaC CloudOps ${{parameters.DeploymentName}}-${{parameters.Environment}}"
+            
+            $deploymentParameters = @{
+                Name                  = "${{parameters.DeploymentName}}"
+                Location              = "${{parameters.Location}}"
+                TemplateFile          = "${{parameters.DeploymentPath}}\main.bicep"
+                TemplateParameterFile = "${{parameters.DeploymentPath}}\main.parameters.json"
+                Verbose               = $true
+            }
+            
+            New-AzDeployment @deploymentParameters
