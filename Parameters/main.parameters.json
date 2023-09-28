@@ -12,29 +12,29 @@
         "value": "testing"
       },
       "workload": {
-        "value": "tibcodv"
+        "value": "aks"
       },
       "parNetworkResourceGroupName": {
-        "value": "rg-network-bidatavdev-dev-weu-01"
+        "value": "rg-network-aks-dev-weu-01"
       },
       "parSubscription": {
-        "value": "ab66dd81-de95-423e-bccc-a44dc2d8e876"
+        "value": ""
       },
       "parGlobalLocation": {
         "value": "global"
       },
       "parVnetName": {
-        "value": "vnet-bidatavdev-dev-weu-01"
+        "value": "vnet-aks-dev-weu-01"
       },
       "parTags": {
         "value": {
-          "Application": "datavirtualisation server",
+          "Application": "kubernetes cluster for proces handlers and other small and scalable applications",
           "CostCenter": "-",
-          "Department": "BI",
+          "Department": "IT",
           "DeployedBy": "CloudOps",
           "Environment": "Dev",
-          "Owner": "BI",
-          "WorkloadName": "tibcodv"
+          "Owner": "CloudOps",
+          "WorkloadName": "aks"
         }
       },
       "parPoolCount": {
@@ -256,7 +256,7 @@
       "parWorkspaceActionEmailReceiver01": {
         "value": {
           "name": "Email_-EmailAction-",
-          "emailAddress": "autiomationbi@nieuwestroom.nl",
+          "emailAddress": "",
           "useCommonAlertSchema": true
         }
       }
