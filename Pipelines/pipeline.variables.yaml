@@ -1,6 +1,6 @@
 variables:
   Location: "westeurope"
-  DeploymentPath: "$(Build.SourcesDirectory)/deployment"
+  DeploymentPath: "$(Build.SourcesDirectory)"
   DeploymentName: 'NS_AKS_Core'
   Environment: "Dev"
   ScriptPath: "$(Build.SourcesDirectory)/scripts"
