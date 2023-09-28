@@ -341,10 +341,10 @@ var enviromentMap = {
 
 @description('this variable map translates a given deployment enviormnet into a subnet ip range')
 var subnetMap = {
-  development: '10.116.0.0/23'
-  acceptation: '10.116.2.0/23'
-  production: '10.116.4.0/23'
-  testing: '10.116.6.0/23'
+  development: '10.0.0.0/23'
+  acceptation: '10.0.2.0/23'
+  production: '10.0.4.0/23'
+  testing: '10.0.6.0/23'
 }
 
 
