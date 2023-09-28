@@ -1,0 +1,32 @@
+parameters:
+  - name: WorkloadName
+    type: string
+  - name: ServiceConnection
+    type: string
+  - name: Environment
+    type: string
+  - name: Subscription
+    type: string
+jobs:
+  - job: Configure
+    displayName: 'Configure ${{variables.Environment}} ${{variables.WorkloadName}}'
+    steps:
+      - checkout: self
+        path: src
+        submodules: true
+
+      - task: AzureCLI@2
+        displayName: 'Configure ${{variables.Environment}} ${{variables.WorkloadName}}'
+        inputs:
+          azureSubscription: "${{ parameters.ServiceConnection }}"
+          scriptType: ps
+          scriptLocation: inlineScript
+          inlineScript: |
+            Write-Host "Configuring ${{variables.Environment}} ${{variables.WorkloadName}} through powershell"
+
+            $ResourceGroupName = "rg-${{parameters.WorkloadName}}-${{parameters.Environment}}-weu"
+            $ClusterName = "aks-${{parameters.WorkloadName}}-${{parameters.Environment}}-weu-01"
+            $WorkspaceName = "law-${{parameters.WorkloadName}}-${{parameters.Environment}}-weu-01"
+            $WorkspaceID = "/subscriptions/${{parameters.Subscription}}/resourceGroups/$ResourceGroupName/providers/Microsoft.OperationalInsights/workspaces/$WorkspaceName"
+            
+            az aks enable-addons --addons monitoring --resource-group $ResourceGroupName --name $ClusterName --workspace-resource-id $WorkspaceID

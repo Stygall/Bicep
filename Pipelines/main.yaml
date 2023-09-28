@@ -1,0 +1,49 @@
+trigger:
+  branches:
+    include:
+      - feature/*
+      - main
+pool:
+  vmImage: windows-2019
+
+variables:
+  - template: pipeline.variables.yaml
+  
+
+stages:
+  - stage: "Build_Validate_${{variables.Environment}}_${{variables.WorkloadName}}_bicep"
+    condition: succeeded()
+    jobs:
+      - template: build.yaml
+        parameters:
+          DeploymentPath: "${{variables.DeploymentPath}}"
+          DeploymentName: "${{variables.DeploymentName}}"
+          Environment: "${{variables.Environment}}"
+          Location: "${{variables.Location}}"
+          ServiceConnection: "${{variables.ServiceConnection}}"
+
+# we should add a new stage here that does the resource group and network resources
+
+  - stage: "Deploy_${{variables.Environment}}_${{variables.WorkloadName}}_and_supporting_resources"
+    dependsOn: "Build_Validate_${{variables.Environment}}_${{variables.WorkloadName}}_bicep"
+    # should depend on previous stage
+    jobs:
+      - template: deploy.yaml
+        parameters:
+          DeploymentPath: "${{variables.DeploymentPath}}"
+          DeploymentName: "${{variables.DeploymentName}}"
+          Environment: "${{variables.Environment}}"
+          Location: "${{variables.Location}}"
+          ServiceConnection: "${{variables.ServiceConnection}}"
+ 
+ 
+  - stage: "Configure_${{variables.Environment}}_${{variables.WorkloadName}}"
+  # this should include the rbac bicep as that too is config
+    dependsOn: "Deploy_${{variables.Environment}}_${{variables.WorkloadName}}_and_supporting_resources"
+    jobs: 
+      - template: config.yaml
+        parameters:
+          WorkloadName: "${{variables.WorkloadName}}"
+          ServiceConnection: "${{variables.ServiceConnection}}"
+          Environment: "${{variables.Environment}}"
+          Subscription: "${{variables.Subscription}}"
