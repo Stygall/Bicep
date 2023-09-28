@@ -31,8 +31,8 @@ jobs:
             $deploymentParameters = @{
                 Name                  = "${{parameters.DeploymentName}}"
                 Location              = "${{parameters.Location}}"
-                TemplateFile          = "${{parameters.DeploymentPath}}\main.bicep"
-                TemplateParameterFile = "${{parameters.DeploymentPath}}\main.parameters.json"
+                TemplateFile          = "${{parameters.DeploymentPath}}\Deployment\main.bicep"
+                TemplateParameterFile = "${{parameters.DeploymentPath}}\Parameters\main.parameters.json"
                 Verbose               = $true
             }
             
