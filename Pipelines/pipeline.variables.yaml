@@ -1,9 +1,9 @@
 variables:
   Location: "westeurope"
   DeploymentPath: "$(Build.SourcesDirectory)/deployment"
-  DeploymentName: 'NSBI-Tibcodv'
+  DeploymentName: ""
   Environment: "test"
   ScriptPath: "$(Build.SourcesDirectory)/scripts"
-  WorkloadName: "tibcodv"
-  ServiceConnection: "svc-nist-dev-nsbidatavis-CloudOps"
-  Subscription: "ab66dd81-de95-423e-bccc-a44dc2d8e876"
+  WorkloadName: ""
+  ServiceConnection: ""
+  Subscription: ""
