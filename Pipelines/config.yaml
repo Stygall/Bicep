@@ -23,10 +23,3 @@ jobs:
           scriptLocation: inlineScript
           inlineScript: |
             Write-Host "Configuring ${{variables.Environment}} ${{variables.WorkloadName}} through powershell"
-
-            $ResourceGroupName = "rg-${{parameters.WorkloadName}}-${{parameters.Environment}}-weu"
-            $ClusterName = "aks-${{parameters.WorkloadName}}-${{parameters.Environment}}-weu-01"
-            $WorkspaceName = "law-${{parameters.WorkloadName}}-${{parameters.Environment}}-weu-01"
-            $WorkspaceID = "/subscriptions/${{parameters.Subscription}}/resourceGroups/$ResourceGroupName/providers/Microsoft.OperationalInsights/workspaces/$WorkspaceName"
-            
-            az aks enable-addons --addons monitoring --resource-group $ResourceGroupName --name $ClusterName --workspace-resource-id $WorkspaceID
