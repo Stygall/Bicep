@@ -140,13 +140,6 @@ var subnetMap02 = {
   testing: '10.116.22.0/23'
 }
 
-var vmIpMap = {
-  development: '10.116.8.5/23'
-  acceptation: '10.116.10.5/23'
-  production: '10.116.12.5/23'
-  testing: '10.116.14.5/23'
-}
-
 
 //* varable map outputs //
 @description('this variable is the output for the corresponding variable map function')
@@ -160,9 +153,6 @@ var subnetPrefix = subnetMap[toLower(parEnv)]
 
 @description('this variable is the output for the corresponding variable map function')
 var subnetPrefix02 = subnetMap02[toLower(parEnv)]
-
-@description('this variable is the output for the corresponding variable map funciton')
-var vmPrivateIp = vmIpMap[toLower(parEnv)]
 
 
 //* variable name builders //
@@ -178,12 +168,6 @@ var ipConfigName  = toLower('snet-${workload}-${env}-${shortCode}')
 @description('this variable builds the name for the network security group resource using the outputs from the mapping variables')
 var networkSecurityGroupName = toLower('nsg-${workload}-${env}-${shortCode}')
 
-@description('this variable builds the name for the virtual machine resource')
-var vmName = toLower('vm-${workload}-server-${env}-${shortCode}-01')
-
-@description('this variable builds the name for the virtual machine scale set resource')
-var vmScaleSetName = toLower('vmss-${workload}-node_manager-${env}-${shortCode}-01')
-
 @description('this variable builds the name for the action group resource using the outputs from the mapping variables')
 var actionGroupName = toLower('ag-${workload}-${env}-${shortCode}-01')
 
@@ -192,10 +176,6 @@ var workspaceName = toLower('law-${workload}-${env}-${shortCode}-01')
 
 @description('this variable builds the name for the virtual machine resource')
 var sqlName = toLower('sql-${workload}')
-
-//@description('this variable builds the name for the data disk resources')
-//var dataDiskName = toLower('disk-${workload}-${env}-${shortCode}')
-
 
 //* arrays and dictionaries of params //
 @description('''this variable is an array of lists of email recievers, 
