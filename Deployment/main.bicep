@@ -54,114 +54,17 @@ param parVnetName string
 param parTags object
 
 
-//* virtual machine params //
-@description('this parameter describes the admin username of the vm')
-param parVMAdminUserName string 
-
-@description('this parameter describes the admin password of the vm')
-@secure()
-param parVMAdminPassword string 
-
-@description('this parameter describes the os type of the vm')
-param parVMOsType string
-
-@description('this parameter describes the size of the vm')
-param parVMSize string 
-
-@description('this parameter describes the network interface configuration of the vm')
-param parVMNicSuffix string
-
-@allowed([
-  'Delete'
-  'Detach'
-])
-param parVMNicDeleteOption string 
-
-@description('this parameter describes the image reference SKU of the vm')
-param parVMImageReferenceSKU string
-
-@description('this parameter describes the image reference OS Version of the vm')
-param parVMImageReferenceVersion string
-
-@description('this parameter describes the image reference OS Offer of the vm')
-param parVMImageReferenceOffer string
-
-@description('this parameter describes the image reference OS Publisher of the vm')
-param parVMImageReferencePublisher string
-
-@description('this parameter describes the os disk caching type of the vm')
-param parVMOsDiskCaching string
-
-@description('this parameter describes the os disk create option of the vm')
-param parVMOsDiskCreateOption string
-
-@description('this parameter describes whether or not the VM has encryption at host enabled')
-param parVMEncryptionAtHost bool
-
-
-//* virtual machine scale set params // 
-@description('this parameter describes the admin username of the vm scale set')
-param parVMSSAdminUserName string 
-
-@description('this parameter describes the admin password of the vm scale set')
-@secure()
-param parVMSSAdminPassword string 
-
-@description('this parameter describes the os type of the vm scale set')
-param parVMSSOsType string
-
-@description('this parameter describes the size of the vm scale set')
-param parVMSSSize string 
-
-@description('this parameter describes the image reference SKU of the vm scale set')
-param parVMSSImageReferenceSKU string
-
-@description('this parameter describes the image reference OS Version of the vm scale set')
-param parVMSSImageReferenceVersion string
-
-@description('this parameter describes the image reference OS Offer of the vm scale set')
-param parVMSSImageReferenceOffer string
-
-@description('this parameter describes the image reference OS Publisher of the vm scale set')
-param parVMSSImageReferencePublisher string
-
-@description('this parameter describes the os disk create option of the vm scale set')
-param parVMSSOsDiskCreateOption string
-
-@description('this parameter describes whether or not the vm scale set has encryption at host enabled')
-param parVMSSEncryptionAtHost bool 
-
-@description('this parameter describes the availability zones of the vm scale set')
-param parVMSSAvailabilityZones array
-
-@description('this parameter describes the minimum amount of virtual machines in the vm scale set')
-param parVMSSMinimumAmount int
-
-@description('this parameter describes the network interface configuration of the vm')
-param parVMSSNicSuffix string
-
-@description('this parameter describes the delete option used by the network interface card of the virtual machine scale set')
-@allowed([
-  'Delete'
-  'Detach'
-])
-param parVMSSNicDeleteOption string 
-
-@description('this parameter describes the amount of fault domains present in the vm scaleset ')
-param parVMSSFaultDomain int
-
-
 //* disk parameters //
-// @description('this describes the payment and redundancy level of the data disk')
-// @allowed([
-//   'PremiumV2_LRS'
-//   'Premium_LRS'
-//   'Premium_ZRS'
-//   'StandardSSD_LRS'
-//   'Standard_LRS'
-//   'UltraSSD_LRS'
-// ])
-// param parDataDiskSku string
+@description('this describes the payment and redundancy level of the data disk')
+@allowed([
+  'PremiumV2_LRS'
+  'Premium_LRS'
+  'Premium_ZRS'
+  'StandardSSD_LRS'
+  'Standard_LRS'
+  'UltraSSD_LRS'
+])
+param parDataDiskSku string
 
 @description('this discribes the size of the data disk')
 param parDataDiskSizeGb int
@@ -256,13 +159,6 @@ var subnetMap02 = {
   testing: '10.0.22.0/23'
 }
 
-var vmIpMap = {
-  development: '10.116.8.5/23'
-  acceptation: '10.116.10.5/23'
-  production: '10.116.12.5/23'
-  testing: '10.116.14.5/23'
-}
-
 
 //* varable map outputs //
 @description('this variable is the output for the corresponding variable map function')
@@ -276,9 +172,6 @@ var subnetPrefix = subnetMap[toLower(parEnv)]
 
 @description('this variable is the output for the corresponding variable map function')
 var subnetPrefix02 = subnetMap02[toLower(parEnv)]
-
-@description('this variable is the output for the corresponding variable map funciton')
-var vmPrivateIp = vmIpMap[toLower(parEnv)]
 
 
 //* variable name builders //
@@ -294,20 +187,14 @@ var ipConfigName  = toLower('snet-${workload}-${env}-${shortCode}')
 @description('this variable builds the name for the network security group resource using the outputs from the mapping variables')
 var networkSecurityGroupName = toLower('nsg-${workload}-${env}-${shortCode}')
 
-@description('this variable builds the name for the virtual machine resource')
-var vmName = toLower('vm-${workload}-server-${env}-${shortCode}-01')
-
-@description('this variable builds the name for the virtual machine scale set resource')
-var vmScaleSetName = toLower('vmss-${workload}-node_manager-${env}-${shortCode}-01')
-
 @description('this variable builds the name for the action group resource using the outputs from the mapping variables')
 var actionGroupName = toLower('ag-${workload}-${env}-${shortCode}-01')
 
 @description('this variable builds the name for the log analytics workspace resource using the outputs from the mapping variables')
 var workspaceName = toLower('law-${workload}-${env}-${shortCode}-01')
 
-//@description('this variable builds the name for the data disk resources')
-//var dataDiskName = toLower('disk-${workload}-${env}-${shortCode}')
+@description('this variable builds the name for the data disk resources')
+var dataDiskName = toLower('disk-${workload}-${env}-${shortCode}')
 
 
 //* arrays and dictionaries of params //
@@ -439,140 +326,17 @@ module subnet_module02 '../ResourceModules/modules/network/virtual-network/subne
 //? ===============================================================================================================================================
 //? workload bicep //
 
-//* virtual machine bicep //
-module virtualMachine_module '../ResourceModules/modules/compute/virtual-machine/main.bicep' =  {
-  name: vmName
-  scope: resourceGroup_resource
-  params: {
-    computerName: 'SpotfireSrv'
-    name: vmName
-    location: parLocation
-    adminUsername: parVMAdminUserName
-    adminPassword: parVMAdminPassword 
-    imageReference:{
-      sku: parVMImageReferenceSKU
-      offer: parVMImageReferenceOffer
-      publisher: parVMImageReferencePublisher
-      version: parVMImageReferenceVersion
-    }
-    nicConfigurations: [
-      {
-        nicSuffix: parVMNicSuffix
-        deleteOption: parVMNicDeleteOption
-        ipConfigurations: [
-          {
-            name: ipConfigName
-            subnetResourceId: subnet_module.outputs.resourceId
-            privtateIPAddress: vmPrivateIp
-          }
-        ]
-        nsgId: networkSecurityGroup_module.outputs.resourceId
-      }
-    ]
-    osDisk: {
-      caching: parVMOsDiskCaching
-      createOption: parVMOsDiskCreateOption
-      diskSizeGB: parOSDiskSizeGb
-      managedDisk: {
-        storageAccountType: parDataDiskManagedStorageAccountType
-      }  
-    }
-    osType: parVMOsType
-    vmSize: parVMSize
-    monitoringWorkspaceId: workspace_module.outputs.resourceId
-    dataDisks: [
-      {
-        createOption: parDataDiskCreateOption
-        diskSizeGB: parDataDiskSizeGb
-        managedDisk: {
-          storageAccountType: parDataDiskManagedStorageAccountType
-        }  
-      }
-    ]
-    encryptionAtHost: parVMEncryptionAtHost
-    tags: parTags
-  }
-  dependsOn: [
-    workspace_module
-  ]
-}
-
-
-//* virtual machine scale set bicep //
-module virtualMachineScaleSet '../ResourceModules/modules/compute/virtual-machine-scale-set/main.bicep' = {
-  scope: resourceGroup_resource
-  name: vmScaleSetName
-  params: {
-    location: parLocation
-    adminUsername: parVMSSAdminUserName
-    adminPassword: parVMSSAdminPassword
-    imageReference:{
-      sku: parVMSSImageReferenceSKU
-      offer: parVMSSImageReferenceOffer
-      publisher: parVMSSImageReferencePublisher
-      version: parVMSSImageReferenceVersion
-    }
-    name: vmScaleSetName
-    osDisk: {
-      createOption: parVMSSOsDiskCreateOption
-      diskSizeGB: parOSDiskSizeGb
-      managedDisk: {
-        storageAccountType: parDataDiskManagedStorageAccountType
-      }  
-    }
-    osType: parVMSSOsType
-    skuName: parVMSSSize
-    dataDisks: [
-      {
-        caching: parVMOsDiskCaching
-        createOption: parDataDiskCreateOption
-        diskSizeGB: parVMSSDataDiskSizeGb
-        managedDisk: {
-          storageAccountType: parDataDiskManagedStorageAccountType
-        }  
-      }
-    ]
-    monitoringWorkspaceId: workspace_module.outputs.resourceId
-    availabilityZones: parVMSSAvailabilityZones
-    scaleSetFaultDomain: parVMSSFaultDomain
-    skuCapacity: parVMSSMinimumAmount
-    encryptionAtHost: parVMSSEncryptionAtHost
-    nicConfigurations:  [
-      {
-        nicSuffix: parVMSSNicSuffix
-        deleteOption: parVMSSNicDeleteOption
-        ipConfigurations: [
-          {
-            name: ipConfigName
-            properties:{
-              subnet: {
-                id: subnet_module02.outputs.resourceId
-              }  
-            }        
-          }
-        ]
-        networkSecurityGroup: networkSecurityGroup_module02.outputs.resourceId
-      }
-    ]
-    tags: parTags
-  }
-  dependsOn: [
-    workspace_module
-  ]
-}
-
-
 //* data disk bicep //
-// module dataDisk_module01 '../ResourceModules/modules/compute/disk/main.bicep' = {
-//   scope: resourceGroup(resourceGroupName)
-//   name: '${dataDiskName}-01'
-//   params: {
-//     location: parLocation
-//     name: '${dataDiskName}-01'
-//     sku: parDataDiskSku
-//     diskSizeGB: parDataDiskSizeGb
-//     managedDisk: {
-//        storageAccountType: parDataDiskManagedStorageAccountType
-//     }
-//   }
-// }
+module dataDisk_module01 '../ResourceModules/modules/compute/disk/main.bicep' = {
+  scope: resourceGroup(resourceGroupName)
+  name: '${dataDiskName}-01'
+  params: {
+    location: parLocation
+    name: '${dataDiskName}-01'
+    sku: parDataDiskSku
+    diskSizeGB: parDataDiskSizeGb
+    managedDisk: {
+       storageAccountType: parDataDiskManagedStorageAccountType
+    }
+  }
+}
