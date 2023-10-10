@@ -1,9 +1,9 @@
 variables:
   Location: "westeurope"
   DeploymentPath: "$(Build.SourcesDirectory)/deployment"
-  DeploymentName: ''
+  DeploymentName: "Virtual-Machines"
   Environment: "test"
   ScriptPath: "$(Build.SourcesDirectory)/scripts"
-  WorkloadName: ""
+  WorkloadName: "Virtual-Machines"
   ServiceConnection: ""
   Subscription: ""
