@@ -13,7 +13,7 @@
       "value": "development"
     },
     "workload": {
-      "value": ""
+      "value": "Virtual-Machines"
     },
     "parNetworkResourceGroupName": {
       "value": ""
@@ -26,13 +26,13 @@
     },
     "parTags": {
       "value": {
-        "Application": "",
+        "Application": "Virtual-Machines",
         "CostCenter": "",
         "Department": "",
         "DeployedBy": "",
         "Environment": "",
         "Owner": "",
-        "WorkloadName": ""
+        "WorkloadName": "Virtual-Machines"
       }
     },
     "parVMAdminUserName": {
