@@ -1,1 +1,94 @@
-
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "newOrExisting": {
+      "value": "new"
+    },
+    "parLocation": {
+      "value": "westeurope"
+    },
+    "parEnv": {
+      "value": "development"
+    },
+    "workload": {
+      "value": "sql-server"
+    },
+    "parNetworkResourceGroupName": {
+      "value": ""
+    },
+    "parGlobalLocation": {
+      "value": "global"
+    },
+    "parVnetName": {
+      "value": ""
+    },
+    "parTags": {
+      "value": {
+        "Application": "sql-server",
+        "CostCenter": "-",
+        "Department": "",
+        "DeployedBy": "",
+        "Environment": "",
+        "Owner": "",
+        "WorkloadName": "sql-server"
+      }
+    },
+    "parActionGroupShortName": {
+      "value": "test"
+    },
+    "parActionGroupEnabled": {
+      "value": false
+    },
+    "parActionGroupSmsReceivers": {
+      "value": []
+    },
+    "parActionGroupWebhookReceivers": {
+      "value": []
+    },
+    "parActionGroupItsmReceivers": {
+      "value": []
+    },
+    "parActionGroupAzureAppPushReceivers": {
+      "value": []
+    },
+    "parActionGroupAutomationRunbookReceivers": {
+      "value": []
+    },
+    "parActionGroupVoiceReceivers": {
+      "value": []
+    },
+    "parActionGroupLogicAppReceivers": {
+      "value": []
+    },
+    "parActionGroupAzureFunctionReceivers": {
+      "value": []
+    },
+    "parActionGroupArmRoleReceivers": {
+      "value": []
+    },
+    "parWorkspaceActionEmailReceiver01": {
+      "value": {
+        "name": "Email_-EmailAction-",
+        "emailAddress": "automationbi@nieuwestroom.nl",
+        "useCommonAlertSchema": true
+      }
+    },
+    "parSQLAdminUserName": {
+      "reference": {
+        "keyVault": {
+          "id": ""
+        },
+        "secretName": "SpotfireSQLAdmDevUn"
+      }
+    },
+    "parSQLAdminPassword": {
+      "reference": {
+        "keyVault": {
+          "id": ""
+        },
+        "secretName": "SpotfireSQLAdmDevPw"
+      }
+    },
+  }
+}
