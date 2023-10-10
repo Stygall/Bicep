@@ -1,0 +1,201 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "newOrExisting": {
+      "value": "new"
+    },
+    "parLocation": {
+      "value": "westeurope"
+    },
+    "parEnv": {
+      "value": "development"
+    },
+    "workload": {
+      "value": ""
+    },
+    "parNetworkResourceGroupName": {
+      "value": ""
+    },
+    "parGlobalLocation": {
+      "value": "global"
+    },
+    "parVnetName": {
+      "value": ""
+    },
+    "parTags": {
+      "value": {
+        "Application": "",
+        "CostCenter": "",
+        "Department": "",
+        "DeployedBy": "",
+        "Environment": "",
+        "Owner": "",
+        "WorkloadName": ""
+      }
+    },
+    "parVMAdminUserName": {
+      "reference": {
+        "keyVault": {
+          "id": ""
+        },
+        "secretName": "SpotfireVMAdmDevUn"
+      }
+    }, 
+    "parVMAdminPassword": {
+      "reference": {
+        "keyVault": {
+          "id": ""
+        },
+        "secretName": "SpotfireVMAdmDevPw"
+      }
+    },
+    "parVMOsType": {
+      "value": "Windows"
+    },
+    "parVMSize": {
+      "value": "Standard_DS2_V2"
+    },
+    "parVMNicSuffix": {
+      "value": "-nic-01"
+    },
+    "parVMNicDeleteOption": {
+      "value": "Delete"
+    },
+    "parVMImageReferenceSKU": {
+      "value": "2022-datacenter-azure-edition"
+    },
+    "parVMImageReferenceVersion": {
+      "value": "latest"
+    },
+    "parVMImageReferenceOffer": {
+      "value": "WindowsServer"
+    },
+    "parVMImageReferencePublisher": {
+      "value": "MicrosoftWindowsServer"
+    },
+    "parVMOsDiskCaching": {
+      "value": "ReadOnly"
+    },
+    "parVMOsDiskCreateOption": {
+      "value": "FromImage"
+    },
+    "parVMEncryptionAtHost": {
+      "value": false
+    },
+    "parVMSSAdminUserName": {
+      "reference": {
+        "keyVault": {
+          "id": ""
+        },
+        "secretName": "SpotfireVMSSAdmDevUn"
+      }
+    },
+    "parVMSSAdminPassword": {
+      "reference": {
+        "keyVault": {
+          "id": ""
+        },
+        "secretName": "SpotfireVMSSAdmDevPw"
+      }
+    },
+    "parVMSSOsType": {
+      "value": "Windows"
+    },
+    "parVMSSSize": {
+      "value": "Standard_DS2_V2"
+    },
+    "parVMSSImageReferenceSKU": {
+      "value": "2022-datacenter-azure-edition"
+    },
+    "parVMSSImageReferenceVersion": {
+      "value": "latest"
+    },
+    "parVMSSImageReferenceOffer": {
+      "value": "WindowsServer"
+    },
+    "parVMSSImageReferencePublisher": {
+      "value": "MicrosoftWindowsServer"
+    },
+    "parVMSSOsDiskCreateOption": {
+      "value": "FromImage"
+    },
+    "parVMSSEncryptionAtHost": {
+      "value": false
+    },
+    "parVMSSAvailabilityZones": {
+      "value": [
+        1,
+        2,
+        3
+      ]
+    },
+    "parVMSSNicSuffix": {
+      "value": "-nic-01"
+    },
+    "parVMSSNicDeleteOption": {
+      "value": "Delete"
+    },
+    "parVMSSMinimumAmount": {
+      "value": 3
+    },
+    "parVMSSFaultDomain": {
+      "value": 5
+    },
+    "parActionGroupShortName": {
+      "value": "test"
+    },
+    "parActionGroupEnabled": {
+      "value": false
+    },
+    "parActionGroupSmsReceivers": {
+      "value": []
+    },
+    "parActionGroupWebhookReceivers": {
+      "value": []
+    },
+    "parActionGroupItsmReceivers": {
+      "value": []
+    },
+    "parActionGroupAzureAppPushReceivers": {
+      "value": []
+    },
+    "parActionGroupAutomationRunbookReceivers": {
+      "value": []
+    },
+    "parActionGroupVoiceReceivers": {
+      "value": []
+    },
+    "parActionGroupLogicAppReceivers": {
+      "value": []
+    },
+    "parActionGroupAzureFunctionReceivers": {
+      "value": []
+    },
+    "parActionGroupArmRoleReceivers": {
+      "value": []
+    },
+    "parWorkspaceActionEmailReceiver01": {
+      "value": {
+        "name": "Email_-EmailAction-",
+        "emailAddress": "",
+        "useCommonAlertSchema": true
+      }
+    },
+    "parDataDiskSizeGb": {
+      "value": 128
+    },
+    "parOSDiskSizeGb": {
+      "value": 128
+    },
+    "parVMSSDataDiskSizeGb": {
+      "value": 64
+    },
+    "parDataDiskCreateOption": {
+      "value": "Empty"
+    },
+    "parDataDiskManagedStorageAccountType": {
+      "value": "Premium_LRS"
+    }
+  }
+}
