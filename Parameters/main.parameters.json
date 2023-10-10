@@ -26,122 +26,14 @@
     },
     "parTags": {
       "value": {
-        "Application": "Virtual-Machines",
+        "Application": "managed-disks",
         "CostCenter": "",
         "Department": "",
         "DeployedBy": "",
         "Environment": "",
         "Owner": "",
-        "WorkloadName": "Virtual-Machines"
+        "WorkloadName": "managed-disks"
       }
-    },
-    "parVMAdminUserName": {
-      "reference": {
-        "keyVault": {
-          "id": ""
-        },
-        "secretName": "SpotfireVMAdmDevUn"
-      }
-    }, 
-    "parVMAdminPassword": {
-      "reference": {
-        "keyVault": {
-          "id": ""
-        },
-        "secretName": "SpotfireVMAdmDevPw"
-      }
-    },
-    "parVMOsType": {
-      "value": "Windows"
-    },
-    "parVMSize": {
-      "value": "Standard_DS2_V2"
-    },
-    "parVMNicSuffix": {
-      "value": "-nic-01"
-    },
-    "parVMNicDeleteOption": {
-      "value": "Delete"
-    },
-    "parVMImageReferenceSKU": {
-      "value": "2022-datacenter-azure-edition"
-    },
-    "parVMImageReferenceVersion": {
-      "value": "latest"
-    },
-    "parVMImageReferenceOffer": {
-      "value": "WindowsServer"
-    },
-    "parVMImageReferencePublisher": {
-      "value": "MicrosoftWindowsServer"
-    },
-    "parVMOsDiskCaching": {
-      "value": "ReadOnly"
-    },
-    "parVMOsDiskCreateOption": {
-      "value": "FromImage"
-    },
-    "parVMEncryptionAtHost": {
-      "value": false
-    },
-    "parVMSSAdminUserName": {
-      "reference": {
-        "keyVault": {
-          "id": ""
-        },
-        "secretName": "SpotfireVMSSAdmDevUn"
-      }
-    },
-    "parVMSSAdminPassword": {
-      "reference": {
-        "keyVault": {
-          "id": ""
-        },
-        "secretName": "SpotfireVMSSAdmDevPw"
-      }
-    },
-    "parVMSSOsType": {
-      "value": "Windows"
-    },
-    "parVMSSSize": {
-      "value": "Standard_DS2_V2"
-    },
-    "parVMSSImageReferenceSKU": {
-      "value": "2022-datacenter-azure-edition"
-    },
-    "parVMSSImageReferenceVersion": {
-      "value": "latest"
-    },
-    "parVMSSImageReferenceOffer": {
-      "value": "WindowsServer"
-    },
-    "parVMSSImageReferencePublisher": {
-      "value": "MicrosoftWindowsServer"
-    },
-    "parVMSSOsDiskCreateOption": {
-      "value": "FromImage"
-    },
-    "parVMSSEncryptionAtHost": {
-      "value": false
-    },
-    "parVMSSAvailabilityZones": {
-      "value": [
-        1,
-        2,
-        3
-      ]
-    },
-    "parVMSSNicSuffix": {
-      "value": "-nic-01"
-    },
-    "parVMSSNicDeleteOption": {
-      "value": "Delete"
-    },
-    "parVMSSMinimumAmount": {
-      "value": 3
-    },
-    "parVMSSFaultDomain": {
-      "value": 5
     },
     "parActionGroupShortName": {
       "value": "test"
