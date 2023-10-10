@@ -4,6 +4,6 @@ variables:
   DeploymentName: ''
   Environment: "test"
   ScriptPath: "$(Build.SourcesDirectory)/scripts"
-  WorkloadName: "tibcodv"
+  WorkloadName: ""
   ServiceConnection: ""
   Subscription: ""
